@@ -13,7 +13,9 @@ public class Bobber : MonoBehaviour
 
     public float waterHeight = -2.5f;
     
-    // public float lineStrength = 1f;
+    public float lineStrength = 1f;
+
+    public FishingRod fishingLine = null;
 
     Rigidbody2D m_Rigidbody;
 
@@ -33,11 +35,6 @@ public class Bobber : MonoBehaviour
         if (difference < 0)
         {
             m_Rigidbody.AddForceAtPosition(Vector2.up * floatingPower * Mathf.Abs(difference), transform.position);
-            // calculate the vector direction from the fishing line, subtract the NORMALIZED line position from the bobber position
-            // lineVector = transform.position - lineConnectionTransform.position;
-            // lineVector.normalize();
-            // Rigidbody2D.AddForce(lineStrength * lineVector);
-
             
             // multiple that by the line effect
             Debug.Log($"DEBUG applying upward force at {difference}");
@@ -52,6 +49,14 @@ public class Bobber : MonoBehaviour
         {
             underwater = false;
             SwitchState(false);
+        }
+        // calculate the vector direction from the fishing line, subtract the NORMALIZED line position from the bobber position
+        // do an if check to see if the line should affect it
+        if (fishingLine.isReeled)
+        {
+            Vector2 lineVector = transform.position - fishingLine.transform.position;
+            lineVector.Normalize();
+            m_Rigidbody.AddForceAtPosition(-lineStrength * lineVector, transform.position);
         }
     }
 
