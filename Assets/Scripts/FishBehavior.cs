@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class FishBehavior : MonoBehaviour
 {   
+    public GameObject mediumFish;
     [SerializeField] float moveSpeed = 1f;
     Vector3 fishStartPoint;
     Rigidbody2D myRigidBody;
@@ -31,21 +32,26 @@ public class FishBehavior : MonoBehaviour
         myRigidBody.velocity = new Vector2(newSpeed, 0f);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        // var newSign = -(Mathf.Sign(myRigidBody.velocity.x));
-        // transform.localScale = new Vector(newSign * transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        Bobber bobber = collision.GetComponent<Bobber>();
 
-        // TurnFish();
-
-        Player player = collision.GetComponent<Player>();
-
-        if(player)
+        if(bobber)
         {
-            player.numFish++;
-            Destroy(this.gameObject);
+            mediumFish.transform.parent = bobber.transform;
+            Debug.Log($"The fish's grandparent is now: {mediumFish.transform.parent.name}");
         }
+
+        // Player player = collision.GetComponent<Player>();
+
+        // if(player)
+        // {
+        //     player.numFish++;
+        //     Debug.Log("Caught a fish!");
+        //     Destroy(this.gameObject);
+        // }
         // run whenever a fish is successfully reeled in, rather than colliding
+        // maybe like if the position is where the player is?
 
 
 
@@ -63,7 +69,9 @@ public class FishBehavior : MonoBehaviour
 
 // do these each step by step
 
-// make the fish parent a child of the bobber using Transform.parent when hooked
+// make the fish parent a child of the bobber using Transform.parent when hooked -> DONE
 // new state for when the Fish is fighting with the bobber, stop having it move left and right
 // add force to Bobber as the Fish fights it, have it stay still for a bit, then move down and right (opposite the direction of the line)
 // make the force SLIGHTLY stronger than the line
+
+// when bobber collides with player, reset it's position?
