@@ -10,17 +10,12 @@ public class Bobber : MonoBehaviour
     public float airDrag = 0f;
     public float airAngularDrag = 0.05f;
     public float floatingPower = 2f;
-
     public float waterHeight = -2.5f;
-    
+    public bool underwater;
+
     public float lineStrength = 1f;
-
     public FishingRod fishingLine = null;
-
     Rigidbody2D m_Rigidbody;
-
-    bool underwater;
-    
 
     void Start()
     {
@@ -30,6 +25,16 @@ public class Bobber : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!fishingLine.isCast)
+        {
+            m_Rigidbody.gravityScale = 0f;
+            return;
+        }
+        else
+        {
+            m_Rigidbody.gravityScale = 1.0f;
+        }
+
         float difference = transform.position.y - waterHeight;
         
         if (difference < 0)
@@ -47,6 +52,7 @@ public class Bobber : MonoBehaviour
             underwater = false;
             SwitchState(false);
         }
+
         if (fishingLine.isReeled)
         {
             Vector2 lineVector = transform.position - fishingLine.transform.position;
@@ -68,4 +74,16 @@ public class Bobber : MonoBehaviour
             m_Rigidbody.angularDrag = airAngularDrag;
         }
     }
+
+    public void PerformCast(float castPower)
+    {
+       m_Rigidbody.AddForceAtPosition(Vector2.right * castPower, transform.position, ForceMode2D.Impulse);
+    }
+
+    public void HookedFish()
+    {
+        m_Rigidbody.AddForceAtPosition(new Vector2(1, -1) * lineStrength * 0.9f, transform.position, ForceMode2D.Impulse);
+        Debug.Log("We have hooked the fish");
+    }
+
 }
