@@ -16,6 +16,7 @@ public class Bobber : MonoBehaviour
     public float lineStrength = 1f;
     public FishingRod fishingLine = null;
     Rigidbody2D m_Rigidbody;
+    public float fishPower = 0.00009f;
 
     void Start()
     {
@@ -82,8 +83,7 @@ public class Bobber : MonoBehaviour
 
     public void HookedFish()
     {
-        m_Rigidbody.AddForceAtPosition(new Vector2(1, -1) * lineStrength * 0.9f, transform.position, ForceMode2D.Impulse);
-        Debug.Log("We have hooked the fish");
+        m_Rigidbody.AddForceAtPosition(new Vector2(1, -1) * fishPower, transform.position, ForceMode2D.Impulse);
     }
 
 }

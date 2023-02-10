@@ -12,7 +12,6 @@ public class FishBehavior : MonoBehaviour
     [SerializeField] bool isFacingRight = true;
     [SerializeField] bool bobberBite = false;
     Bobber bobber;
-    bool bobberHasBeenBit = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +25,6 @@ public class FishBehavior : MonoBehaviour
     {
         if (!bobberBite)
         {
-            if (bobberHasBeenBit)
-            {
-                Debug.Log("In fish idle with bit bobber!");
-            }
             var distanceFromOriginal = transform.position.x - fishStartPoint.x;
             if((isFacingRight && distanceFromOriginal >= 2) || (!isFacingRight&& distanceFromOriginal <= -2))
             {
@@ -38,20 +33,19 @@ public class FishBehavior : MonoBehaviour
             var newSpeed = isFacingRight ? moveSpeed : -moveSpeed;
             myRigidBody.velocity = new Vector2(newSpeed, 0f);
         }
-        else if (bobber != null)
+        else
         {
             bobber.HookedFish();
-            bobberHasBeenBit = true;
-            // it makes the bobber null for some reason??
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        bobber = collision.GetComponent<Bobber>();
+        var collidedBobber = collision.GetComponent<Bobber>();
 
-        if(bobber)
+        if(collidedBobber != null)
         {
+            bobber = collidedBobber;
             mediumFish.transform.parent = bobber.transform;
             Debug.Log($"The fish's grandparent is now: {mediumFish.transform.parent.name}");
             bobberBite = true;
@@ -77,11 +71,6 @@ public class FishBehavior : MonoBehaviour
         isFacingRight = !isFacingRight;
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
-
-    // private void FishFight()
-    // {
-        // myRigidBody.AddForceAtPosition(Vector2.down, transform.position);
-   //  }
 }
 
 
