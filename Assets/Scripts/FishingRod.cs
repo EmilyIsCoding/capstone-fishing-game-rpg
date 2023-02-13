@@ -11,9 +11,6 @@ public class FishingRod : MonoBehaviour
     public float castPower = 0f;
     public Player player = null;
 
-    // put a collider on the fishing rod, and when the fish collides with it, the player grabs the fish
-    // make the collider bigger than the square
-
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +32,7 @@ public class FishingRod : MonoBehaviour
         }
         else if (!isCast)
         {
-            castPower += 0.005f;
+            castPower += 0.0065f;
             Mathf.Clamp(castPower, 0f, 1f);
         }
 
@@ -48,17 +45,13 @@ public class FishingRod : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var fish = collision.GetComponent<FishBehavior>();
-
         if(fish != null)
         {
-            // looks a bit janky with the movement, maybe animate to trophy box
+            bobber.transform.position = new Vector2(player.transform.position.x, player.transform.position.y);
             fish.transform.position = new Vector2(player.transform.position.x, player.transform.position.y);
-
-            player.numFish++;
-            Debug.Log("Caught a fish!");
-            Destroy(fish);
         }
     }
+
 
     IEnumerator ReelIn()
     {
