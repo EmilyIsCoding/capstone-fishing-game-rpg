@@ -46,6 +46,7 @@ public class FishBehavior : MonoBehaviour
         if(collidedBobber != null)
         {
             bobber = collidedBobber;
+            isFacingRight = true;
             mediumFish.transform.parent = bobber.transform;
             bobberBite = true;
         }

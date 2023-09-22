@@ -32,7 +32,7 @@ public class FishingRod : MonoBehaviour
         }
         else if (!isCast)
         {
-            castPower += 0.0065f;
+            castPower += 0.02f;
             Mathf.Clamp(castPower, 0f, 1f);
         }
 
