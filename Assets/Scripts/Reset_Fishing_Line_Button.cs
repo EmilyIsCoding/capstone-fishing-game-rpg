@@ -18,7 +18,9 @@ public class Reset_Fishing_Line_Button : MonoBehaviour
     public void resetFishingLine()
     {
         {   
-            mediumFish.transform.SetParent(null, true);
+            if (mediumFish != null) {
+                mediumFish.transform.SetParent(null, true);
+            }
             fishingRod.isCast = false;
             fishingRod.isCasting = false;
             fishingRod.isReeled = false;
