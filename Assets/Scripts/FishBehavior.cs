@@ -7,17 +7,17 @@ public class FishBehavior : MonoBehaviour
 {   
     public GameObject mediumFish;
     [SerializeField] float moveSpeed = 1f;
-    Vector3 fishStartPoint;
+    public Vector3 fishStartPoint;
     Rigidbody2D myRigidBody;
     [SerializeField] bool isFacingRight = true;
-    [SerializeField] bool bobberBite = false;
+    public bool bobberBite = false;
     Bobber bobber;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidBody = GetComponent<Rigidbody2D>();
-        fishStartPoint = transform.position;
+        fishStartPoint = this.transform.position;
     }
 
     // Update is called once per frame
