@@ -18,7 +18,7 @@ itch.io Link To Be Added
 ## Roadmap
 1. Convert the Free Aspect resolution to a standard resolution
 2. Deploy on itch.io
-3. Add a feature to "catch" the fish and have it disappear"
+3. Add a feature to "catch" the fish and have it disappear
 4. Add in more fish with varying behaviors
 
 ## Contributing
